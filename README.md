@@ -10,6 +10,8 @@ The business layer provides a [service](https://app.swaggerhub.com/apis-docs/sae
 
 ## Running the app
 
+Just go to the following [link](http://64.23.221.75/) to see the app up and running
+
 ## Stay in touch
 
 - Author - [Saul Bustamante](https://github.com/saesbuba)
