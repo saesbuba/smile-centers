@@ -88,13 +88,13 @@ const Form = ({ setSmileCenters, error, setError }) => {
           <input
             type="button"
             className="bg-green-500 p-3 text-white uppercase font-bold hover:bg-green-600 cursor-pointer transition-all rounded-md max-w-40"
-            value="limpiar filtros"
+            value="clean filters"
             onClick={handleCleanFilters}
           />
           <input
             type="submit"
             className="bg-indigo-600 p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-all rounded-md w-40"
-            value="aplicar filtros"
+            value="apply filters"
           />
         </div>
       </form>
