@@ -1,5 +1,5 @@
 export class SmileCenterService {
-  #endPoint = `${import.meta.env.API_URL}/centers`;
+  #endPoint = `${import.meta.env.VITE_API_URL}/centers`;
 
   async getSmileCenters(queryParameters) {
     try {
