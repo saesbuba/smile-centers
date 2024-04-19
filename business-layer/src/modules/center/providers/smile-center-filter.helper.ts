@@ -27,14 +27,23 @@ export class SmileCenterFilter {
 
   filterSmileCentersByZone(smileCenters, zoneFilterBy) {
     return smileCenters.filter(
-      (smileCenter) => smileCenter['Zone'].toLowerCase() === zoneFilterBy,
+      (smileCenter) =>
+        smileCenter['Zone']
+          .trim()
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/\p{Diacritic}/gu, '') === zoneFilterBy,
     );
   }
 
   filterSmileCentersByCenterType(smileCenters, centerTypeFilterBy) {
     return smileCenters.filter(
       (smileCenter) =>
-        smileCenter['Center_Type'].toLowerCase() === centerTypeFilterBy,
+        smileCenter['Center_Type']
+          .trim()
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/\p{Diacritic}/gu, '') === centerTypeFilterBy,
     );
   }
   filterSmileCentersByServiceName(smileCenters, serviceNameFilterBy) {

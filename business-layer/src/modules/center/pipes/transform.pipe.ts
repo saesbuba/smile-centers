@@ -14,7 +14,11 @@ export class TransformPipe implements PipeTransform {
         ) {
           newQueryParameters = {
             ...newQueryParameters,
-            [valueKey]: value[valueKey].toLowerCase().trim(),
+            [valueKey]: value[valueKey]
+              .trim()
+              .toLowerCase()
+              .normalize('NFD')
+              .replace(/\p{Diacritic}/gu, ''),
           };
         }
         return newQueryParameters;
