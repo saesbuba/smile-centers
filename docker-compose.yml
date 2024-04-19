@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  business-layer:
+    build: ./business-layer
+    container_name: smile-centers-api
+    environment:
+      - PARSE_API_ADDRESS=${PARSE_API_ADDRESS}
+      - APPLICATION_ID=${APPLICATION_ID}
+      - REST_API_KEY=${REST_API_KEY}
+    ports:
+      - 3000:3000
+    volumes:
+      - ./business-layer/src:/app/src
+  presentation-layer:
+    build: ./presentation-layer
+    container_name: smile-centers-app
+    ports:
+      - 8080:5173
+    volumes:
+      - ./presentation-layer/src:/app/src

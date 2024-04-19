@@ -1,0 +1,297 @@
+openapi: 3.0.0
+servers:
+  - description: local server
+    url: http://localhost:3000
+info:
+  description: 'This is a RESTful Web API to manage smile centers, it was developed with [NestJS](https://github.com/nestjs/nest)'
+  version: '1.0'
+  title: Smile Centers API
+  contact:
+    email: saulesteban.bustamante@gmail.com
+tags:
+  - name: Smile centers
+    description: ''
+paths:
+  /api/v1/centers:
+    parameters:
+      - name: serviceName
+        in: query
+        required: false
+        description: Helps to filter smile centers by one of the services it provides
+        schema:
+          type: string
+      - name: zone
+        in: query
+        required: false
+        description: Helps to filter smile centers by the zone it is located
+        schema:
+          type: string
+      - name: centerType
+        in: query
+        required: false
+        description: Helps to filter smile centers by the type of the center
+        schema:
+          type: string
+    get:
+      tags:
+        - Smile centers
+      summary: Returns all smile centers found in the data source
+      description: |
+        Returns all smile centers found in the data source
+      responses:
+        '200':
+          $ref: '#/components/responses/200GetSmileCenters'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+
+components:
+  schemas:
+    HttpResponse:
+      type: object
+      properties:
+        success:
+          description: Indicates if the operation finished successfully(true) or if there was an error(false)
+          type: boolean
+        statusCode:
+          description: Indicates the http status code of the response
+          type: number
+        records:
+          description: This field contains the records related to the resource that is being requested by the client
+          oneOf:
+            - type: array
+              items: {}
+            - type: object
+        message:
+          description: Message that provides added value of the request
+          type: string
+          minLength: 0
+        details:
+          description: Extra details related to the operation
+          oneOf:
+            - type: array
+            - type: object
+            - type: string
+            - type: number
+      required:
+        - success
+        - statusCode
+        - records
+    SmileCenter:
+      properties:
+        internalId:
+          type: string
+        centerName:
+          type: string
+        address:
+          type: string
+        centerType:
+          type: string
+        zone:
+          type: string
+        appointmentTypeId:
+          type: number
+        calendarId:
+          type: number
+        centerIcon:
+          type: string
+          nullable: true
+        services:
+          type: object
+          nullable: true
+      required:
+        - internalId
+        - centerName
+        - address
+        - centerType
+        - zone
+        - appointmentTypeId
+        - calendarId
+        - services
+  responses:
+    200GetSmileCenters:
+      description: 'Smile centers retrieved successfully'
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HttpResponse'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SmileCenter'
+          examples:
+            SmileCenters:
+              $ref: '#/components/examples/SmileCenters'
+            SmileCentersFilteredByZone:
+              $ref: '#/components/examples/SmileCentersFilteredByZone'
+            NoRecordsFound:
+              $ref: '#/components/examples/NoSmileCentersFound'
+    500InternalServerError:
+      description: Internal server error ocurred during the transaction
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/HttpResponse'
+              - type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: string
+                      nullable: true
+                    minItems: 0
+                    example: []
+          examples:
+            500InternalServerError:
+              $ref: '#/components/examples/500InternalServerError'
+  examples:
+    SmileCenters:
+      summary: All smile centers in data source
+      value:
+        statusCode: '200'
+        success: 'true'
+        records:
+          - internalId: 'o4oele5ja3rlv5vvmnl'
+            centerName: 'Guadalajara'
+            address: 'San Juan de los Lagos 35-C  Guadalajara / Jal. México'
+            centerType: 'Centro Moons'
+            zone: 'Vallarta Poniente'
+            appointmentTypeId: '53222513'
+            calendarId: '2967442'
+            centerIcon: 'https://moons-website-assets.s3.amazonaws.com/assets/images/moons.svg'
+            services:
+              rescan:
+                productId: 'rescan'
+                AppointmentTypeId: '53251554'
+          - internalId: 'tmpyv7xeqvlv5vvmnl'
+            centerName: 'Polanco'
+            address: 'Lafontaine 73 Piso 4, consultorio 2-3 Miguel Hidalgo México'
+            centerType: 'Centro Moons'
+            zone: 'Polanco'
+            appointmentTypeId: '53222513'
+            calendarId: '9008838'
+            centerIcon: 'https://moons-website-assets.s3.amazonaws.com/assets/images/moons.svg'
+            services:
+              rescan:
+                productId: 'rescan'
+                AppointmentTypeId: '53251554'
+          - internalId: 'as5v13hsximlv5vvmnl'
+            centerName: 'Coyoacán'
+            address: 'Av. Coyoacán 1878 Piso 12 Int 1202 Benito Juárez México'
+            centerType: 'Centro Moons'
+            zone: 'Coyoacán'
+            appointmentTypeId: '53222513'
+            calendarId: '8846085'
+            centerIcon: 'https://moons-website-assets.s3.amazonaws.com/assets/images/moons.svg'
+            services:
+              rescan:
+                productId: 'rescan'
+                AppointmentTypeId: '53251554'
+          - internalId: '296ndpqzcmklv5vvmnl'
+            centerName: 'Cali'
+            address: 'Calle 5D #38A-35 Torre 2 Consultorio 1015 Cali Colombia'
+            centerType: 'Centro Moons'
+            zone: 'Cali'
+            appointmentTypeId: '53559053'
+            calendarId: '9965281'
+            centerIcon: 'https://moons-website-assets.s3.amazonaws.com/assets/images/moons.svg'
+            services:
+          - internalId: 'sftg27ls0d7lv5vvmnl'
+            centerName: 'Liverpool Querétaro'
+            address: 'Anillo Vial Fray Junípero Serra 7901  Santiago de Querétaro México'
+            centerType: 'Liverpool'
+            zone: 'Paseo de Querétaro Liverpool Bx'
+            appointmentTypeId: '55427554'
+            calendarId: '6186668'
+            centerIcon: 'https://moons-website-assets.s3.amazonaws.com/assets/images/liverpool.svg'
+            services:
+              refinamiento:
+                productId: 'refinamiento'
+                AppointmentTypeId: '53222633'
+              scan_retenedor:
+                productId: 'scan_retenedor'
+                AppointmentTypeId: '60910470'
+              interpretacion_plan:
+                productId: 'interpretacion_plan'
+                AppointmentTypeId: '60925457'
+    SmileCentersFilteredByZone:
+      summary: Smile centers filtered by zone equals to 'Liverpool'
+      value:
+        statusCode: '200'
+        success: 'true'
+        records:
+          - internalId: 'lw2zm0k8ybmlv5wua9s'
+            centerName: 'Liverpool Mitikah CDMX'
+            address: 'Real Mayorazgo 130  Benito Juárez México'
+            centerType: 'Liverpool'
+            zone: 'Liverpool'
+            appointmentTypeId: '55427554'
+            calendarId: '3317615'
+            centerIcon: 'https://moons-website-assets.s3.amazonaws.com/assets/images/liverpool.svg'
+            services:
+              refinamiento:
+                productId: 'refinamiento'
+                AppointmentTypeId: '53222633'
+              scan_retenedor:
+                productId: 'scan_retenedor'
+                AppointmentTypeId: '60910470'
+              interpretacion_plan:
+                productId: 'interpretacion_plan'
+                AppointmentTypeId: '60925457'
+          - internalId: 'ge5e11w1myulv5wua9s'
+            centerName: 'Liverpool Insurgentes CDMX'
+            address: 'Av. Insurgentes Sur 1310 - Área BX Área BX Benito Juárez México'
+            centerType: 'Liverpool'
+            zone: 'Liverpool'
+            appointmentTypeId: '55960305'
+            calendarId: '5395259'
+            services:
+              refinamiento:
+                productId: 'refinamiento'
+                AppointmentTypeId: '53222633'
+          - internalId: 'bofkaz68kjflv5wua9s'
+            centerName: 'Liverpool Mitikah CDMX'
+            address: 'Real Mayorazgo 130  Benito Juárez México'
+            centerType: 'Liverpool'
+            zone: 'Liverpool'
+            appointmentTypeId: '55960305'
+            calendarId: '3317615'
+            services:
+              refinamiento:
+                productId: 'refinamiento'
+                AppointmentTypeId: '53222633'
+          - internalId: 'vcjrfda0uylv5wua9s'
+            centerName: 'Liverpool Insurgentes CDMX'
+            address: 'Av. Insurgentes Sur 1310 - Área BX Área BX Benito Juárez México'
+            centerType: 'Liverpool'
+            zone: 'Liverpool'
+            appointmentTypeId: '55427554'
+            calendarId: '5395259'
+            centerIcon: 'https://moons-website-assets.s3.amazonaws.com/assets/images/liverpool.svg'
+            services:
+              refinamiento:
+                productId: 'refinamiento'
+                AppointmentTypeId: '53222633'
+              scan_retenedor:
+                productId: 'scan_retenedor'
+                AppointmentTypeId: '60910470'
+              interpretacion_plan:
+                productId: 'interpretacion_plan'
+                AppointmentTypeId: '60925457'
+    NoSmileCentersFound:
+      summary: No smile centers found matching the search criteria
+      value:
+        success: true
+        statusCode: 200
+        message: 'No smile centers found matching the search criteria'
+        data: []
+    500InternalServerError:
+      summary: Internal server error ocurred
+      value:
+        success: false
+        statusCode: 500
+        message: Internal server error ocurred, please reach the owner of this API
+        data: []
