@@ -16,7 +16,7 @@ services:
     build: ./presentation-layer
     container_name: smile-centers-app
     environment:
-      - API_URL=${API_URL}
+      - VITE_API_URL=${VITE_API_URL}
     ports:
       - 80:5173
     volumes:
