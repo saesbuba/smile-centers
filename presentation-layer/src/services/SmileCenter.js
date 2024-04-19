@@ -1,5 +1,5 @@
 export class SmileCenterService {
-  #endPoint = "http://localhost:3000/api/v1/center";
+  #endPoint = `${import.meta.env.API_URL}/centers`;
 
   async getSmileCenters(queryParameters) {
     try {

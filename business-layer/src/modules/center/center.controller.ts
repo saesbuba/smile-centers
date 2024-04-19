@@ -10,7 +10,7 @@ import { HttpResponse } from '../http-response/http-response.schema';
 import { CenterResponse } from './models/center-response';
 import { TransformPipe } from './pipes/transform.pipe';
 
-@Controller('center')
+@Controller('centers')
 export class CenterController {
   private httpResponse: HttpResponse<undefined> = {
     statusCode: HttpStatus.OK,
