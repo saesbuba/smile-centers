@@ -18,6 +18,6 @@ services:
     environment:
       - API_URL=${API_URL}
     ports:
-      - 8080:5173
+      - 80:5173
     volumes:
       - ./presentation-layer/src:/app/src
